@@ -20,7 +20,6 @@ public class Tankstelle {
     private double distance;
     private Prices prices;
 }
-
 /*
 Example
 [
