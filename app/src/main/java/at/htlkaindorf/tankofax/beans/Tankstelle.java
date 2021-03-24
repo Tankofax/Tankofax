@@ -1,9 +1,10 @@
 package at.htlkaindorf.tankofax.beans;
 
+
 public class Tankstelle {
     private int id;
     private String name;
-    //private Location location;
+    private Location location;
     //private Contact contact;
     //private OpeningHours openingHours;
     //private OfferInformation offerInformation;
