@@ -1,0 +1,18 @@
+at/htlkaindorf/tankofax/beans/OpeningHours.java
+ at.htlkaindorf.tankofax.beans.OpeningHours
+at/htlkaindorf/tankofax/beans/PaymentMethods.java
+ at.htlkaindorf.tankofax.beans.PaymentMethods
+at/htlkaindorf/tankofax/beans/Location.java
+ at.htlkaindorf.tankofax.beans.Location
+at/htlkaindorf/tankofax/beans/OfferInformation.java
+ at.htlkaindorf.tankofax.beans.OfferInformation
+at/htlkaindorf/tankofax/MainActivity.java
+ at.htlkaindorf.tankofax.MainActivity
+at/htlkaindorf/tankofax/beans/Tankstelle.java
+ at.htlkaindorf.tankofax.beans.Tankstelle
+at/htlkaindorf/tankofax/BuildConfig.java
+ at.htlkaindorf.tankofax.BuildConfig
+at/htlkaindorf/tankofax/beans/Prices.java
+ at.htlkaindorf.tankofax.beans.Prices
+at/htlkaindorf/tankofax/beans/Contact.java
+ at.htlkaindorf.tankofax.beans.Contact
