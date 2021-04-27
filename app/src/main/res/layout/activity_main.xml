@@ -39,7 +39,15 @@
         android:layout_height="1dp"
         android:layout_above="@+id/button2"
         android:layout_marginBottom="0dp"
-        android:background="?android:attr/listDivider" />
+        android:background="?android:attr/listDivider"/>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/map"
+        tools:context=".MapsActivity"
+        android:name="com.google.android.gms.maps.SupportMapFragment" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
