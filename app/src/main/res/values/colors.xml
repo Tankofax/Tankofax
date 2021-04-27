@@ -3,6 +3,15 @@
 
     <!-- Tankofax Colors -->
 
+
+    <color name="light">#dadada</color>
+    <color name="central">#7a7a7a</color>
+    <color name="dark">#333333</color>
+
+    <color name="highlight_light">#6B8EC7</color>
+    <color name="highlight_dark">#274068</color>
+
+
     <color name="color1">#808080</color>
     <color name="color2">#3B3B3B</color>
     <color name="color3">#aeaeae</color>

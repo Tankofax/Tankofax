@@ -18,7 +18,7 @@
         android:layout_toStartOf="@+id/button3"
         android:background="@drawable/btn_navsearch"
         android:text="Button"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/light" />
 
     <Button
         android:id="@+id/button3"
@@ -30,7 +30,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/btn_navmap"
         android:text="Button"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/light"
         android:textColorHighlight="#FF2B2B" />
 
     <View
@@ -76,7 +76,8 @@
         android:layout_toStartOf="@+id/btn_sonstiges"
         android:layout_toEndOf="@+id/btn_diesel"
         android:background="@drawable/btn_benzin"
-        android:text="Benzin" />
+        android:text="Benzin"
+        android:textColor="@color/light" />
 
     <Button
         android:id="@+id/btn_sonstiges"
@@ -87,7 +88,8 @@
         android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/btn_sonstiges"
-        android:text="Sonstiges" />
+        android:text="Sonstiges"
+        android:textColor="@color/light" />
 
     <Button
         android:id="@+id/btn_diesel"
@@ -98,7 +100,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="48dp"
         android:background="@drawable/btn_diesel"
-        android:text="Diesel" />
+        android:text="Diesel"
+        android:textColor="@color/light" />
 
     <TextView
         android:id="@+id/textView3"
