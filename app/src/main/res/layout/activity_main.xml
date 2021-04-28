@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center|fill"
     tools:context=".MainActivity">
 
     <Button
@@ -18,7 +19,7 @@
         android:layout_toStartOf="@+id/button3"
         android:background="@drawable/btn_navsearch"
         android:text="Button"
-        android:textColor="@color/light" />
+        android:textColor="@color/bluegray100" />
 
     <Button
         android:id="@+id/button3"
@@ -30,7 +31,7 @@
         android:layout_marginBottom="8dp"
         android:background="@drawable/btn_navmap"
         android:text="Button"
-        android:textColor="@color/light"
+        android:textColor="@color/bluegray100"
         android:textColorHighlight="#FF2B2B" />
 
     <View
@@ -39,7 +40,7 @@
         android:layout_height="1dp"
         android:layout_above="@+id/button2"
         android:layout_marginBottom="0dp"
-        android:background="?android:attr/listDivider"/>
+        android:background="?android:attr/listDivider" />
 
 
     <fragment
@@ -60,10 +61,12 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/map"
         android:layout_below="@+id/btn_benzin"
+        android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp" />
 
     <Button
         android:id="@+id/btn_benzin"
@@ -71,13 +74,13 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="0dp"
         android:layout_toStartOf="@+id/btn_sonstiges"
         android:layout_toEndOf="@+id/btn_diesel"
         android:background="@drawable/btn_benzin"
         android:text="Benzin"
-        android:textColor="@color/light" />
+        android:textColor="@color/bluegray100" />
 
     <Button
         android:id="@+id/btn_sonstiges"
@@ -85,11 +88,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/btn_sonstiges"
         android:text="Sonstiges"
-        android:textColor="@color/light" />
+        android:textColor="@color/bluegray100" />
 
     <Button
         android:id="@+id/btn_diesel"
@@ -98,23 +101,41 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="64dp"
         android:background="@drawable/btn_diesel"
         android:text="Diesel"
-        android:textColor="@color/light" />
+        android:textColor="@color/bluegray100" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="300dp"
         android:layout_height="50dp"
+        android:layout_alignBottom="@+id/imageButton"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="1dp"
-        android:layout_marginTop="-1dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="7dp"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="1dp"
+        android:backgroundTintMode="multiply"
         android:gravity="center"
         android:text="Tankofax"
         android:textAlignment="center"
-        android:textSize="30sp"
-        android:textStyle="normal" />
+        android:textColor="@color/bluegray400"
+        android:textSize="42sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:backgroundTint="#FFFFFF"
+        app:srcCompat="@drawable/icon_settings" />
 
 </RelativeLayout>

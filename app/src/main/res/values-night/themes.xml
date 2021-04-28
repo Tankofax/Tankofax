@@ -2,13 +2,13 @@
     <!-- Base application theme. -->
     <style name="Theme.Tankofax" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/color5</item>
-        <item name="colorPrimaryVariant">@color/color4</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/gray400</item>
+        <item name="colorPrimaryVariant">@color/gray500</item>
+        <item name="colorOnPrimary">@color/triadic300</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/color2</item>
-        <item name="colorSecondaryVariant">@color/color1</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorSecondary">@color/gray800</item>
+        <item name="colorSecondaryVariant">@color/gray900</item>
+        <item name="colorOnSecondary">@color/analogous400</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
