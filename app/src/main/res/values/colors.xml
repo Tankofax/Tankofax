@@ -54,13 +54,15 @@
     <color name="gray900">#212121</color>
 
 
-    <color name="light">#dadada</color>
-    <color name="central">#7a7a7a</color>
-    <color name="dark">#333333</color>
+    <color name="blue">#6495ED</color>
 
-    <color name="highlight_light">#6B8EC7</color>
-    <color name="highlight_dark">#274068</color>
-
+    <color name="gray7">#DADADA</color>
+    <color name="gray6">#808080</color>
+    <color name="gray5">#DCDCDC</color>
+    <color name="gray4">#3B3B3B</color>
+    <color name="gray3">#858585</color>
+    <color name="gray2">#AEAEAE</color>
+    <color name="gray1">#C4C4C4</color>
     <color name="black">#000</color>
     <color name="white">#FFF</color>
     <!-- -->

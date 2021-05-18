@@ -4,42 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/gray7"
     android:gravity="center|fill"
     tools:context=".MainActivity">
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginBottom="8dp"
-        android:layout_toStartOf="@+id/button3"
-        android:background="@drawable/btn_navsearch"
-        android:text="Button"
-        android:textColor="@color/bluegray100" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="205dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/btn_navmap"
-        android:text="Button"
-        android:textColor="@color/bluegray100"
-        android:textColorHighlight="#FF2B2B" />
 
     <View
         android:id="@+id/divider2"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:layout_above="@+id/button2"
-        android:layout_marginBottom="0dp"
+        android:layout_above="@+id/imageButton2"
+        android:layout_marginBottom="4dp"
         android:background="?android:attr/listDivider" />
 
 
@@ -48,12 +22,12 @@
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="wrap_content"
         android:layout_height="300dp"
-        android:layout_above="@+id/divider2"
+        android:layout_above="@+id/imageButton2"
         android:layout_alignParentStart="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="8dp"
         tools:context=".MapsActivity" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -79,8 +53,7 @@
         android:layout_toStartOf="@+id/btn_sonstiges"
         android:layout_toEndOf="@+id/btn_diesel"
         android:background="@drawable/btn_benzin"
-        android:text="Benzin"
-        android:textColor="@color/bluegray100" />
+        android:text="@string/ger_gas2" />
 
     <Button
         android:id="@+id/btn_sonstiges"
@@ -91,8 +64,7 @@
         android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:background="@drawable/btn_sonstiges"
-        android:text="Sonstiges"
-        android:textColor="@color/bluegray100" />
+        android:text="@string/ger_gas3" />
 
     <Button
         android:id="@+id/btn_diesel"
@@ -103,8 +75,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="64dp"
         android:background="@drawable/btn_diesel"
-        android:text="Diesel"
-        android:textColor="@color/bluegray100" />
+        android:text="@string/ger_gas1" />
 
     <TextView
         android:id="@+id/textView3"
@@ -120,7 +91,7 @@
         android:layout_marginBottom="1dp"
         android:backgroundTintMode="multiply"
         android:gravity="center"
-        android:text="Tankofax"
+        android:text="@string/app_name"
         android:textAlignment="center"
         android:textColor="@color/bluegray400"
         android:textSize="42sp"
@@ -135,7 +106,29 @@
         android:layout_alignParentEnd="true"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
-        android:backgroundTint="#FFFFFF"
+        android:backgroundTint="@color/gray7"
         app:srcCompat="@drawable/icon_settings" />
+
+    <ImageButton
+        android:id="@+id/imageButton2"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_navsearch"
+        app:srcCompat="@drawable/ic_baseline_location_searching_24" />
+
+    <ImageButton
+        android:id="@+id/imageButton3"
+        android:layout_width="200dp"
+        android:layout_height="45dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/btn_navmap"
+        app:srcCompat="@drawable/ic_baseline_map_24" />
 
 </RelativeLayout>

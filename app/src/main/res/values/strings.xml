@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">Tankofax</string>
+
+    <string name="ger_gas1">Diesel</string>
+    <string name="ger_gas2">Super</string>
+    <string name="ger_gas3">Erdgas</string>
+
+    <string name="en_gas1">Diesel</string>
+    <string name="en_gas2">Super</string>
+    <string name="en_gas3">Gas</string>
+
+    <string name="ger_set_1">Ansicht</string>
+    <string name="ger_set_2">Sprache</string>
+
+    <string name="en_set_1">Theme</string>
+    <string name="en_set_2">Language</string>
+
+    <string name="theme_1">Light Theme</string>
+    <string name="theme_2">Dark Theme</string>
+    <string name="theme_3">System Default</string>
+
+    <string name="lan_1">English</string>
+    <string name="lan_2">Deutsch</string>
 </resources>
