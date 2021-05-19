@@ -107,7 +107,8 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:backgroundTint="@color/gray7"
-        app:srcCompat="@drawable/icon_settings" />
+        app:srcCompat="@drawable/icon_settings"
+        android:onClick="onSettings"/>
 
     <ImageButton
         android:id="@+id/imageButton2"
