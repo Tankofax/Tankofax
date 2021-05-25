@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -43,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private SupportMapFragment mapFragment;
 
     private API_Access api = new API_Access();
+    private DetailAdapter da = new DetailAdapter();
 
     private List<Tankstelle> dieList;
     private List<Tankstelle> supList;
@@ -56,12 +56,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        recyclerView = findViewById(R.id.rv_Tankstellen);
-        //recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        //recyclerView.setAdapter(new DetailAdapter());
-
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -69,6 +63,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+
+        recyclerView = findViewById(R.id.rv_Tankstellen);
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         fuelButton[0] = findViewById(R.id.btn_diesel);
         fuelButton[1] = findViewById(R.id.btn_benzin);
@@ -85,6 +83,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             case R.id.btn_diesel:
                 try {
                     dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
+                    DetailAdapter da = new DetailAdapter();
+                    da.setFuel(dieList);
+                    recyclerView.setAdapter(da);
+                    for (Tankstelle tankstelle : dieList) {
+                        map.addMarker(new MarkerOptions()
+                                .position(new LatLng(tankstelle.getLocation().getLatitude(), tankstelle.getLocation().getLongtitude()))
+                                );
+
+                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -92,6 +99,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             case R.id.btn_benzin:
                 try {
                     supList = new API_Access().execute("SUP", lat + "", lon + "").get();
+                    da.setFuel(supList);
+                    recyclerView.setAdapter(da);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -99,6 +108,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             case R.id.btn_sonstiges:
                 try {
                     gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
+                    DetailAdapter da = new DetailAdapter();
+                    da.setFuel(gasList);
+                    recyclerView.setAdapter(da);
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -145,7 +157,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     public void dialogSetup(View v) {
-        PopupMenu language = new PopupMenu(this ,v);
+        PopupMenu language = new PopupMenu(this, v);
 
     }
 

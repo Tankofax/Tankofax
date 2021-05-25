@@ -27,7 +27,6 @@ public class API_Access extends  AsyncTask<String, Void, List<Tankstelle>>{
             String urlS = baseURL + "&fuelType=" + strings[0] + "&latitude=" + strings[1] + "&longitude=" + strings[2];
             URL url = new URL(urlS);
             ObjectMapper mapper = new ObjectMapper();
-            //File jsonFile = new File(url.toURI());
             return mapper.readValue(url.openConnection().getInputStream(), new TypeReference<List<Tankstelle>>(){});
         } catch (IOException e) {
             e.printStackTrace();

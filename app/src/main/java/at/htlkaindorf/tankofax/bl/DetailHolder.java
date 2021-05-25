@@ -8,9 +8,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
-
-
-
 public class DetailHolder extends RecyclerView.ViewHolder {
     private TextView tv_Adresse;
     private TextView tv_Name;
@@ -19,7 +16,11 @@ public class DetailHolder extends RecyclerView.ViewHolder {
 
     public DetailHolder(@NonNull View itemView, TextView tv_Adresse, TextView tv_Name, TextView tv_Price1, TextView tv_Price2) {
         super(itemView);
-        itemView.setOnClickListener((e) -> Log.d("DetailHolder.java","clicked"));
+        this.tv_Adresse = tv_Adresse;
+        this.tv_Name = tv_Name;
+        this.tv_Price1 = tv_Price1;
+        this.tv_Price2 = tv_Price2;
+        itemView.setOnClickListener((e) -> Log.d("DetailHolder.java", "clicked"));
     }
 
     public TextView getTv_Adresse() {
