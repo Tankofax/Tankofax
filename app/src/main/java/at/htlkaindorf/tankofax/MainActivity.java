@@ -11,11 +11,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,6 +31,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.htlkaindorf.tankofax.beans.Tankstelle;
+import at.htlkaindorf.tankofax.bl.DetailAdapter;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback, PopupMenu.OnMenuItemClickListener {
     private static final int REQUEST_LOCATION = 1;
@@ -46,10 +50,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private Button[] fuelButton = new Button[3];
 
+    private RecyclerView recyclerView;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        recyclerView = findViewById(R.id.rv_Tankstellen);
+        //recyclerView.setHasFixedSize(true);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        //recyclerView.setAdapter(new DetailAdapter());
+
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
