@@ -132,6 +132,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.show();
     }
 
+    public void dialogSetup(View v) {
+        PopupMenu language = new PopupMenu(this ,v);
+
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
