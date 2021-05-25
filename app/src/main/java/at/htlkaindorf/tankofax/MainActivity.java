@@ -24,8 +24,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 
@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private API_Access api = new API_Access();
 
-    private List<Tankstelle> dieTankstellen;
-    private List<Tankstelle> supTankstellen;
-    private List<Tankstelle> gasTankstellen;
+    private List<Tankstelle> dieList;
+    private List<Tankstelle> supList;
+    private List<Tankstelle> gasList;
 
-    private Button[] fuelType = new Button[3];
+    private Button[] fuelButton = new Button[3];
 
     @SuppressLint("MissingPermission")
     @Override
@@ -58,26 +58,38 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
 
-        //dieTankstellen = api.getTankstelle("DIE", lon, lat);
+        fuelButton[0] = findViewById(R.id.btn_diesel);
+        fuelButton[1] = findViewById(R.id.btn_benzin);
+        fuelButton[2] = findViewById(R.id.btn_sonstiges);
 
-        fuelType[0] = findViewById(R.id.btn_diesel);
-        fuelType[1] = findViewById(R.id.btn_benzin);
-        fuelType[2] = findViewById(R.id.btn_sonstiges);
-        for (Button button : fuelType) {
+        for (Button button : fuelButton) {
             button.setOnClickListener(this::onClickListener);
         }
     }
 
+    @SuppressLint("NonConstantResourceId")
     public void onClickListener(View v) {
         switch (v.getId()) {
             case R.id.btn_diesel:
-                api.getTankstelle("DIE", lon, lat);
+                try {
+                    dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_benzin:
-                api.getTankstelle("SUP", lon, lat);
+                try {
+                    supList = new API_Access().execute("SUP", lat + "", lon + "").get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.btn_sonstiges:
-                api.getTankstelle("GAS", lon, lat);
+                try {
+                    gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
                 break;
             default:
                 break;
@@ -113,25 +125,25 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         map.setMinZoomPreference(10);
     }
 
-    public void onSettings(View v){
-        PopupMenu settings = new PopupMenu(this,v);
+    public void onSettings(View v) {
+        PopupMenu settings = new PopupMenu(this, v);
         settings.setOnMenuItemClickListener(this);
         settings.inflate(R.menu.popup_settings);
         settings.show();
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
-    public boolean onMenuItemClick(MenuItem item){
-        switch(item.getItemId()){
+    public boolean onMenuItemClick(MenuItem item) {
+        switch (item.getItemId()) {
             case R.id.item1:
-                Toast.makeText(this,"Item 1 clicked",Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Item 1 clicked", Toast.LENGTH_LONG).show();
                 break;
             case R.id.item2:
-                Toast.makeText(this,"Item 2 clicked", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Item 2 clicked", Toast.LENGTH_LONG).show();
                 break;
             default:
-                return false;
-
+                break;
         }
         return false;
     }

@@ -15,13 +15,13 @@ public class Tankstelle {
     private String name;
     private Location location;
     private Contact contact;
-    private OpeningHours openingHours;
+    private OpeningHours[] openingHours;
     private OfferInformation offerInformation;
     private PaymentMethods paymentMethods;
     private int position;
     private boolean open;
     private double distance;
-    private Prices prices;
+    private Prices[] prices;
 }
 
 /*

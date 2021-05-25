@@ -1,6 +1,7 @@
 package at.htlkaindorf.tankofax.beans;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import java.time.LocalTime;
 
@@ -16,7 +17,9 @@ public class OpeningHours {
     private String day;
     private String label;
     private int oder;
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime from;
+    @JsonDeserialize(using = LocalTimeDeserializer.class)
     private LocalTime to;
 }
 
