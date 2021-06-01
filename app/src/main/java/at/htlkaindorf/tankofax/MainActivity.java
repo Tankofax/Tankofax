@@ -37,7 +37,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private static final int REQUEST_LOCATION = 1;
     private GoogleMap map;
     private LocationManager locationManager;
-    private LocationListener locationListener;
     private double lat, lon;
 
     private SupportMapFragment mapFragment;

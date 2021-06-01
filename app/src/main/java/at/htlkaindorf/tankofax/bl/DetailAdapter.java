@@ -20,7 +20,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
     @Override
     public DetailHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.detail_tankstelle,parent,false);
+                .inflate(R.layout.tankstelle_item,parent,false);
         TextView tv_Adresse = view.findViewById(R.id.tv_Adresse);
         TextView tv_Name = view.findViewById(R.id.tv_Name);
         TextView tv_Price1 = view.findViewById(R.id.tv_Price1);

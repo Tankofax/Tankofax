@@ -11,7 +11,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tankstelle {
-    private int id;
     private String name;
     private Location location;
     private Contact contact;
