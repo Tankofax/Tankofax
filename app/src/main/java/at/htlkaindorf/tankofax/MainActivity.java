@@ -30,6 +30,7 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import at.htlkaindorf.tankofax.beans.Tankstelle;
+import at.htlkaindorf.tankofax.bl.API_Access;
 import at.htlkaindorf.tankofax.bl.DetailAdapter;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback, PopupMenu.OnMenuItemClickListener {
@@ -83,15 +84,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             case R.id.btn_diesel:
                 try {
                     dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
+                    for (Tankstelle tankstelle: dieList) {
+                        if (!tankstelle.isOpen() || tankstelle.getPrices() == null) {
+                            dieList.remove(tankstelle);
+                        }
+                    }
                     DetailAdapter da = new DetailAdapter();
                     da.setFuel(dieList);
                     recyclerView.setAdapter(da);
-                    for (Tankstelle tankstelle : dieList) {
-                        map.addMarker(new MarkerOptions()
-                                .position(new LatLng(tankstelle.getLocation().getLatitude(), tankstelle.getLocation().getLongtitude()))
-                                );
-
-                    }
+                    //map.addMarker(new MarkerOptions().position(new LatLng(value.getLocation().getLatitude(), value.getLocation().getLongtitude())));
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
