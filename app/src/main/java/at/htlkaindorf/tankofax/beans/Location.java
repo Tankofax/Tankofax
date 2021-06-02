@@ -15,7 +15,7 @@ public class Location {
     private int postalCode;
     private String city;
     private double latitude;
-    private double longtitude;
+    private double longitude;
 }
 
 /*

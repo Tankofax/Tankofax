@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,25 +31,21 @@ import java.util.concurrent.ExecutionException;
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 import at.htlkaindorf.tankofax.bl.API_Access;
 import at.htlkaindorf.tankofax.bl.DetailAdapter;
+import at.htlkaindorf.tankofax.bl.Map_Access;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback, PopupMenu.OnMenuItemClickListener {
     private static final int REQUEST_LOCATION = 1;
-    private GoogleMap map;
-    private LocationManager locationManager;
-    private double lat, lon;
+    private final Map_Access ma = new Map_Access();
+    private final DetailAdapter da = new DetailAdapter();
+    private final Button[] fuelButton = new Button[3];
 
+    private GoogleMap map;
+    private double lat, lon;
     private SupportMapFragment mapFragment;
 
-    private API_Access api = new API_Access();
-    private DetailAdapter da = new DetailAdapter();
-
-    private List<Tankstelle> dieList;
-    private List<Tankstelle> supList;
-    private List<Tankstelle> gasList;
-
-    private Button[] fuelButton = new Button[3];
-
     private RecyclerView recyclerView;
+
+    private boolean moveCamera = true;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -61,8 +56,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
 
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, (LocationListener) this);
+        LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
         recyclerView = findViewById(R.id.rv_Tankstellen);
         recyclerView.setHasFixedSize(true);
@@ -79,38 +74,49 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     @SuppressLint("NonConstantResourceId")
     public void onClickListener(View v) {
+        map.clear();
+        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+        LatLng currentPosition = new LatLng(lat, lon);
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
-                    dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
-                    for (Tankstelle tankstelle: dieList) {
-                        if (!tankstelle.isOpen() || tankstelle.getPrices() == null) {
-                            dieList.remove(tankstelle);
-                        }
-                    }
-                    DetailAdapter da = new DetailAdapter();
+                    List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
                     da.setFuel(dieList);
                     recyclerView.setAdapter(da);
-                    //map.addMarker(new MarkerOptions().position(new LatLng(value.getLocation().getLatitude(), value.getLocation().getLongtitude())));
+                    ma.setVariables(this, dieList, map, currentPosition);
+                    Thread thread = new Thread(ma, "diesel");
+                    thread.start();
+                    moveCamera = false;
+                    map = ma.getMap();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.btn_benzin:
                 try {
-                    supList = new API_Access().execute("SUP", lat + "", lon + "").get();
+                    List<Tankstelle> supList = new API_Access().execute("SUP", lat + "", lon + "").get();
                     da.setFuel(supList);
                     recyclerView.setAdapter(da);
+                    ma.setVariables(this, supList, map, currentPosition);
+                    Thread thread = new Thread(ma, "super");
+                    thread.start();
+                    moveCamera = false;
+                    map = ma.getMap();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
             case R.id.btn_sonstiges:
                 try {
-                    gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
+                    List<Tankstelle> gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
                     DetailAdapter da = new DetailAdapter();
                     da.setFuel(gasList);
                     recyclerView.setAdapter(da);
+                    ma.setVariables(this, gasList, map, currentPosition);
+                    Thread thread = new Thread(ma, "gas");
+                    thread.start();
+                    moveCamera = false;
+                    map = ma.getMap();
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -145,7 +151,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         LatLng currentPosition = new LatLng(lat, lon);
         map.addMarker(new MarkerOptions()
                 .position(currentPosition));
-        map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
+        if (moveCamera) {
+            map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
+        }
         map.setMinZoomPreference(10);
     }
 
@@ -156,20 +164,20 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.show();
     }
 
-    public void dialogSetup(View v) {
+    /*public void dialogSetup(View v) {
         PopupMenu language = new PopupMenu(this, v);
 
-    }
+    }*/
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.item1:
-                Toast.makeText(this, "Item 1 clicked", Toast.LENGTH_LONG).show();
+
                 break;
             case R.id.item2:
-                Toast.makeText(this, "Item 2 clicked", Toast.LENGTH_LONG).show();
+
                 break;
             default:
                 break;
