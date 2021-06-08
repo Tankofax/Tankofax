@@ -173,10 +173,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.item1:
+            case R.id.set1:
 
                 break;
-            case R.id.item2:
+            case R.id.set2:
 
                 break;
             default:
