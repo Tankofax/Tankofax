@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,14 @@ import at.htlkaindorf.tankofax.R;
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
+
     private List<Tankstelle> tankstellen;
+
+    public DetailAdapter(List<Tankstelle> tankstellen) {
+        this.tankstellen = tankstellen;
+    }
+
+
     @NonNull
     @Override
     public DetailHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -25,7 +33,18 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         TextView tv_Name = view.findViewById(R.id.tv_Name);
         TextView tv_Price1 = view.findViewById(R.id.tv_Price1);
         TextView tv_Price2 = view.findViewById(R.id.tv_Price2);
-        return new DetailHolder(view,tv_Adresse,tv_Name,tv_Price1,tv_Price2);
+
+        TextView tv_Distance = view.findViewById(R.id.tv_distance);
+        TextView tv_v_Distance = view.findViewById(R.id.tv_v_contact);
+        TextView tv_Opening_Hour = view.findViewById(R.id.tv_opening_hour);
+        TextView tv_v_Opening_Hour = view.findViewById(R.id.tv_v_opening_hour);
+        TextView tv_Contact = view.findViewById(R.id.tv_contact);
+        TextView tv_v_Contact = view.findViewById(R.id.tv_v_contact);
+
+        RelativeLayout exapandable = view.findViewById(R.id.expandable_layout);
+        RelativeLayout unexpanded = view.findViewById(R.id.unexpanded_layout);
+
+        return new DetailHolder(view,tv_Adresse,tv_Name,tv_Price1,tv_Price2,tv_Distance,tv_v_Distance,tv_Opening_Hour,tv_v_Opening_Hour,tv_Contact,tv_v_Contact,exapandable,unexpanded);
     }
 
     @SuppressLint("SetTextI18n")
@@ -35,6 +54,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         holder.getTv_Adresse().setText(tankstelle.getLocation().getAddress());
         holder.getTv_Name().setText(tankstelle.getName());
         holder.getTv_Price1().setText("Preis");
+
+        boolean isExpandable = tankstellen.get(position).isExpandable();
+        holder.getExpandable_layout().setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+
         try {
             holder.getTv_Price2().setText(tankstelle.getPrices()[0].getAmount() + " €");
         } catch (ArrayIndexOutOfBoundsException ex) {

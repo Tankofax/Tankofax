@@ -52,13 +52,13 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="64dp"
         android:layout_marginEnd="0dp"
-        android:layout_toStartOf="@+id/btn_sonstiges"
+        android:layout_toStartOf="@+id/btn_gas"
         android:layout_toEndOf="@+id/btn_diesel"
         android:background="@drawable/btn_benzin"
         android:text="@string/ger_gas2" />
 
     <Button
-        android:id="@+id/btn_sonstiges"
+        android:id="@+id/btn_gas"
         android:layout_width="135dp"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"

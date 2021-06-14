@@ -11,6 +11,17 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tankstelle {
+
+    private boolean expandable;
+
+    public boolean isExpandable() {
+        return expandable;
+    }
+
+    public void setExpanded(boolean expandable) {
+        this.expandable = expandable;
+    }
+
     private String name;
     private Location location;
     private Contact contact;

@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         fuelButton[0] = findViewById(R.id.btn_diesel);
         fuelButton[1] = findViewById(R.id.btn_benzin);
-        fuelButton[2] = findViewById(R.id.btn_sonstiges);
+        fuelButton[2] = findViewById(R.id.btn_gas);
 
         for (Button button : fuelButton) {
             button.setOnClickListener(this::onClickListener);
@@ -106,7 +106,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     e.printStackTrace();
                 }
                 break;
-            case R.id.btn_sonstiges:
+            case R.id.btn_gas:
                 try {
                     List<Tankstelle> gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
                     DetailAdapter da = new DetailAdapter();
