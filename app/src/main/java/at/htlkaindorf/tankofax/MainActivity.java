@@ -23,6 +23,7 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private final Button[] fuelButton = new Button[3];
 
     private GoogleMap map;
+    private Marker marker;
     private double lat, lon;
     private SupportMapFragment mapFragment;
 
@@ -75,15 +77,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @SuppressLint("NonConstantResourceId")
     public void onClickListener(View v) {
         map.clear();
-        map.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
         LatLng currentPosition = new LatLng(lat, lon);
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
                     List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
                     da.setFuel(dieList);
+                    System.out.println(dieList.size());
                     recyclerView.setAdapter(da);
-                    ma.setVariables(this, dieList, map, currentPosition);
+                    dieList.removeAll(da.getTankstellenToRemove());
+                    da.setFuel(dieList);
+                    System.out.println(dieList.size());
+                    ma.setVariables(this, dieList, map);
                     Thread thread = new Thread(ma, "diesel");
                     thread.start();
                     moveCamera = false;
@@ -97,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     List<Tankstelle> supList = new API_Access().execute("SUP", lat + "", lon + "").get();
                     da.setFuel(supList);
                     recyclerView.setAdapter(da);
-                    ma.setVariables(this, supList, map, currentPosition);
+                    ma.setVariables(this, supList, map);
                     Thread thread = new Thread(ma, "super");
                     thread.start();
                     moveCamera = false;
@@ -112,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     DetailAdapter da = new DetailAdapter();
                     da.setFuel(gasList);
                     recyclerView.setAdapter(da);
-                    ma.setVariables(this, gasList, map, currentPosition);
+                    ma.setVariables(this, gasList, map);
                     Thread thread = new Thread(ma, "gas");
                     thread.start();
                     moveCamera = false;
@@ -128,6 +133,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     @Override
     public void onLocationChanged(@NonNull Location location) {
+        if (marker != null) {
+            marker.remove();
+        }
         lat = location.getLatitude();
         lon = location.getLongitude();
         mapFragment.getMapAsync(this);
@@ -151,6 +159,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         LatLng currentPosition = new LatLng(lat, lon);
         map.addMarker(new MarkerOptions()
                 .position(currentPosition));
+        marker = map.addMarker(new MarkerOptions().position(currentPosition));
         if (moveCamera) {
             map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
         }

@@ -1,6 +1,5 @@
 package at.htlkaindorf.tankofax.bl;
 
-import android.util.Log;
 import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -8,9 +7,6 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import lombok.Data;
-
-@Data
 public class DetailHolder extends RecyclerView.ViewHolder {
     private TextView tv_Adresse;
     private TextView tv_Name;
@@ -40,12 +36,12 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         this.expandable_layout = expandable_layout;
         this.unexpanded_layout = unexpanded_layout;
 
-        unexpanded_layout.setOnClickListener(new View.OnClickListener() {
+        /*unexpanded_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                tankstelle
+
             }
-        });
+        }*/
     }
 
     public TextView getTv_contact() {

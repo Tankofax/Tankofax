@@ -1,6 +1,7 @@
 package at.htlkaindorf.tankofax.bl;
 
 import android.annotation.SuppressLint;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import at.htlkaindorf.tankofax.R;
@@ -18,11 +21,7 @@ import at.htlkaindorf.tankofax.beans.Tankstelle;
 public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
 
     private List<Tankstelle> tankstellen;
-
-    public DetailAdapter(List<Tankstelle> tankstellen) {
-        this.tankstellen = tankstellen;
-    }
-
+    private List<Tankstelle> tankstellenToRemove = new ArrayList<>();
 
     @NonNull
     @Override
@@ -35,7 +34,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         TextView tv_Price2 = view.findViewById(R.id.tv_Price2);
 
         TextView tv_Distance = view.findViewById(R.id.tv_distance);
-        TextView tv_v_Distance = view.findViewById(R.id.tv_v_contact);
+        TextView tv_v_Distance = view.findViewById(R.id.tv_v_distance);
         TextView tv_Opening_Hour = view.findViewById(R.id.tv_opening_hour);
         TextView tv_v_Opening_Hour = view.findViewById(R.id.tv_v_opening_hour);
         TextView tv_Contact = view.findViewById(R.id.tv_contact);
@@ -53,16 +52,16 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         Tankstelle tankstelle = tankstellen.get(position);
         holder.getTv_Adresse().setText(tankstelle.getLocation().getAddress());
         holder.getTv_Name().setText(tankstelle.getName());
-        holder.getTv_Price1().setText("Preis");
-
-        boolean isExpandable = tankstellen.get(position).isExpandable();
-        holder.getExpandable_layout().setVisibility(isExpandable ? View.VISIBLE : View.GONE);
-
         try {
-            holder.getTv_Price2().setText(tankstelle.getPrices()[0].getAmount() + " €");
+            holder.getTv_Price2().setText(tankstelle.getPrices()[0].getAmount() + "");
         } catch (ArrayIndexOutOfBoundsException ex) {
-            holder.getTv_Price1().setText("");
-            holder.getTv_Price2().setText("");
+            holder.getTv_Price2().setText("price");
+        }
+        holder.getTv_v_distance().setText(tankstelle.getDistance() + "");
+        holder.getTv_v_opening_hour().setText(Arrays.toString(tankstelle.getOpeningHours()) + "");
+        holder.getTv_v_contact().setText(tankstelle.getContact() + "");
+        if (holder.getTv_Price2().getText().equals("price")) {
+            tankstellenToRemove.add(tankstelle);
         }
     }
 
@@ -73,5 +72,9 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
 
     public void setFuel(List<Tankstelle> tankstellen) {
         this.tankstellen = tankstellen;
+    }
+
+    public List<Tankstelle> getTankstellenToRemove() {
+        return tankstellenToRemove;
     }
 }

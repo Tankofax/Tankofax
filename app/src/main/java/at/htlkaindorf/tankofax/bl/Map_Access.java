@@ -12,21 +12,20 @@ import at.htlkaindorf.tankofax.beans.Tankstelle;
 
 public class Map_Access implements Runnable {
     private GoogleMap map;
-    private List<Tankstelle> lists;
+    private List<Tankstelle> tankstellen;
     private Activity activity;
-    private LatLng currentLocation;
+
     @Override
     public void run() {
-        for (Tankstelle tankstelle : lists) {
+        for (Tankstelle tankstelle : tankstellen) {
             activity.runOnUiThread(() -> {
                 String title = tankstelle.getName();
                 LatLng position = new LatLng(tankstelle.getLocation().getLatitude(), tankstelle.getLocation().getLongitude());
                 MarkerOptions mo = new MarkerOptions();
                 mo.position(position);
                 mo.title(title);
-                mo.alpha(3);
+                mo.alpha(5);
                 map.addMarker(mo);
-                map.addMarker(new MarkerOptions().position(currentLocation));
             });
         }
     }
@@ -35,14 +34,9 @@ public class Map_Access implements Runnable {
         return map;
     }
 
-    /*public List<Tankstelle> getLists() {
-        return lists;
-    }*/
-
-    public void setVariables(Activity activity, List<Tankstelle> lists, GoogleMap map, LatLng currentLocation) {
+    public void setVariables(Activity activity, List<Tankstelle> tankstellen, GoogleMap map) {
         this.map = map;
-        this.lists = lists;
+        this.tankstellen = tankstellen;
         this.activity = activity;
-        this.currentLocation = currentLocation;
     }
 }
