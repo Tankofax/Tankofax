@@ -2,9 +2,9 @@
     <!-- Base application theme. -->
     <style name="Theme.TankofaxNight" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/gray7</item>
-        <item name="colorPrimaryVariant">@color/gray6</item>
-        <item name="colorOnPrimary">@color/gray2</item>
+        <item name="colorPrimary">@color/blue</item>
+        <item name="colorPrimaryVariant">@color/neutral</item>
+        <item name="colorOnPrimary">@color/gray1</item>
 
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
