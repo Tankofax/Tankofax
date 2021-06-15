@@ -1,5 +1,6 @@
 package at.htlkaindorf.tankofax.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -11,17 +12,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Tankstelle {
-
+    @JsonIgnore
     private boolean expandable;
-
-    public boolean isExpandable() {
-        return expandable;
-    }
-
-    public void setExpanded(boolean expandable) {
-        this.expandable = expandable;
-    }
-
     private String name;
     private Location location;
     private Contact contact;

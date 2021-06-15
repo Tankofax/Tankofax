@@ -48,7 +48,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private RecyclerView recyclerView;
 
     private boolean moveCamera = true;
-
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

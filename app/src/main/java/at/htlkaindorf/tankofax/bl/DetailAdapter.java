@@ -19,7 +19,7 @@ import at.htlkaindorf.tankofax.R;
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 
 public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
-
+    private boolean expand = false;
     private List<Tankstelle> tankstellen;
     private List<Tankstelle> tankstellenToRemove = new ArrayList<>();
 
@@ -43,7 +43,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         RelativeLayout exapandable = view.findViewById(R.id.expandable_layout);
         RelativeLayout unexpanded = view.findViewById(R.id.unexpanded_layout);
 
-        return new DetailHolder(view,tv_Adresse,tv_Name,tv_Price1,tv_Price2,tv_Distance,tv_v_Distance,tv_Opening_Hour,tv_v_Opening_Hour,tv_Contact,tv_v_Contact,exapandable,unexpanded);
+        return new DetailHolder(view,tv_Adresse,tv_Name,tv_Price1,tv_Price2,tv_Distance,tv_v_Distance,tv_Opening_Hour,tv_v_Opening_Hour,tv_Contact,tv_v_Contact,exapandable,unexpanded, tankstellen,this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -62,6 +62,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         holder.getTv_v_contact().setText(tankstelle.getContact() + "");
         if (holder.getTv_Price2().getText().equals("price")) {
             tankstellenToRemove.add(tankstelle);
+            tankstellen.removeAll(tankstellenToRemove);
+            tankstellenToRemove.clear();
+        }
+        boolean isExpandable;
+        try {
+            isExpandable = tankstellen.get(position).isExpandable();
+            holder.getExpandable_layout().setVisibility(isExpandable ? View.VISIBLE : View.GONE);
+        } catch (IndexOutOfBoundsException ex) {
+            System.out.println(ex.toString());
         }
     }
 
@@ -70,11 +79,20 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         return tankstellen.size();
     }
 
+
     public void setFuel(List<Tankstelle> tankstellen) {
         this.tankstellen = tankstellen;
     }
 
     public List<Tankstelle> getTankstellenToRemove() {
         return tankstellenToRemove;
+    }
+
+    public void setExpand(boolean expand) {
+        this.expand = expand;
+    }
+
+    public boolean isExpand() {
+        return expand;
     }
 }

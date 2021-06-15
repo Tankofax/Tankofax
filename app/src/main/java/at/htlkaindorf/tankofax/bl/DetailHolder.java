@@ -7,7 +7,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import at.htlkaindorf.tankofax.beans.Tankstelle;
+
 public class DetailHolder extends RecyclerView.ViewHolder {
+
     private TextView tv_Adresse;
     private TextView tv_Name;
     private TextView tv_Price1;
@@ -18,9 +23,8 @@ public class DetailHolder extends RecyclerView.ViewHolder {
     private RelativeLayout unexpanded_layout;
 
     public DetailHolder(@NonNull View itemView, TextView tv_Adresse, TextView tv_Name, TextView tv_Price1, TextView tv_Price2
-                        ,TextView tv_contact, TextView tv_v_contact, TextView tv_opening_hour, TextView tv_v_opening_hour,
-                         TextView tv_distance, TextView tv_v_distance, RelativeLayout expandable_layout, RelativeLayout unexpanded_layout
-    ) {
+                        , TextView tv_contact, TextView tv_v_contact, TextView tv_opening_hour, TextView tv_v_opening_hour,
+                        TextView tv_distance, TextView tv_v_distance, RelativeLayout expandable_layout, RelativeLayout unexpanded_layout, List<Tankstelle> tankstellen,DetailAdapter adapter) {
         super(itemView);
         this.tv_Adresse = tv_Adresse;
         this.tv_Name = tv_Name;
@@ -36,12 +40,12 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         this.expandable_layout = expandable_layout;
         this.unexpanded_layout = unexpanded_layout;
 
-        /*unexpanded_layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        }*/
+        unexpanded_layout.setOnClickListener(v -> {
+            Tankstelle tankstelle = tankstellen.get(getAdapterPosition());
+            tankstelle.setExpandable(!tankstelle.isExpandable());
+            System.out.println("ficken");
+            adapter.notifyItemChanged(getAdapterPosition());
+        });
     }
 
     public TextView getTv_contact() {
