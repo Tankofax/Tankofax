@@ -82,11 +82,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 try {
                     List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
                     da.setFuel(dieList);
-                    System.out.println(dieList.size());
                     recyclerView.setAdapter(da);
-                    dieList.removeAll(da.getTankstellenToRemove());
-                    da.setFuel(dieList);
-                    System.out.println(dieList.size());
                     ma.setVariables(this, dieList, map);
                     Thread thread = new Thread(ma, "diesel");
                     thread.start();

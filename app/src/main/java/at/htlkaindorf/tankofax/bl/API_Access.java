@@ -24,6 +24,15 @@ public class API_Access extends AsyncTask<String, Void, List<Tankstelle>> {
             URL url = new URL(urlS);
             ObjectMapper mapper = new ObjectMapper();
             tankstellen = mapper.readValue(url.openConnection().getInputStream(), new TypeReference<List<Tankstelle>>() {});
+            List<Tankstelle> tankstelleList = new ArrayList<>();
+            for (Tankstelle tanke: tankstellen) {
+                try {
+                    if (tanke.getPrices()[0].getAmount() > 0) {
+                        tankstelleList.add(tanke);
+                    }
+                } catch (ArrayIndexOutOfBoundsException ignored) {}
+            }
+            tankstellen = tankstelleList;
         } catch (IOException e) {
             e.printStackTrace();
         }
