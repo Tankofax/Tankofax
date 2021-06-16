@@ -30,10 +30,6 @@ public class Map_Access implements Runnable {
         }
     }
 
-    public GoogleMap getMap() {
-        return map;
-    }
-
     public void setVariables(Activity activity, List<Tankstelle> tankstellen, GoogleMap map) {
         this.map = map;
         this.tankstellen = tankstellen;

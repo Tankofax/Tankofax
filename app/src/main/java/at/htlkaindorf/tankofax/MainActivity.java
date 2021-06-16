@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.PopupMenu;
 
 import androidx.annotation.NonNull;
@@ -32,13 +33,18 @@ import java.util.concurrent.ExecutionException;
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 import at.htlkaindorf.tankofax.bl.API_Access;
 import at.htlkaindorf.tankofax.bl.DetailAdapter;
+import at.htlkaindorf.tankofax.bl.JSON_Access;
 import at.htlkaindorf.tankofax.bl.Map_Access;
+import at.htlkaindorf.tankofax.bl.Map_Search;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback, PopupMenu.OnMenuItemClickListener {
     private static final int REQUEST_LOCATION = 1;
     private final Map_Access ma = new Map_Access();
     private final DetailAdapter da = new DetailAdapter();
+    private final JSON_Access json = new JSON_Access();
+
     private final Button[] fuelButton = new Button[3];
+    private final ImageButton[] locationButton = new ImageButton[2];
 
     private GoogleMap map;
     private Marker marker;
@@ -48,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private RecyclerView recyclerView;
 
     private boolean moveCamera = true;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,15 +75,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         fuelButton[1] = findViewById(R.id.btn_benzin);
         fuelButton[2] = findViewById(R.id.btn_gas);
 
+        locationButton[0] = findViewById(R.id.btn_navmap);
+        locationButton[0] = findViewById(R.id.btn_navsearch);
+
         for (Button button : fuelButton) {
             button.setOnClickListener(this::onClickListener);
+        }
+        for (ImageButton imageButton: locationButton) {
+            imageButton.setOnClickListener(this::onClickListener);
+        }
+
+        try {
+            List<Map_Search> map_searches = new JSON_Access().execute("Grottenhofstraße 102").get();
+            map_searches.forEach(m1 -> System.out.println(m1.getFormattedAddress() + " : " + m1.getLat() + ";" + m1.getLng()));
+        } catch (ExecutionException | InterruptedException e) {
+            e.printStackTrace();
         }
     }
 
     @SuppressLint("NonConstantResourceId")
     public void onClickListener(View v) {
         map.clear();
-        LatLng currentPosition = new LatLng(lat, lon);
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
@@ -86,8 +105,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     ma.setVariables(this, dieList, map);
                     Thread thread = new Thread(ma, "diesel");
                     thread.start();
-                    moveCamera = false;
-                    map = ma.getMap();
+                    moveCamera = !moveCamera;
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -100,8 +118,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     ma.setVariables(this, supList, map);
                     Thread thread = new Thread(ma, "super");
                     thread.start();
-                    moveCamera = false;
-                    map = ma.getMap();
+                    moveCamera = !moveCamera;
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -115,15 +132,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     ma.setVariables(this, gasList, map);
                     Thread thread = new Thread(ma, "gas");
                     thread.start();
-                    moveCamera = false;
-                    map = ma.getMap();
+                    moveCamera = !moveCamera;
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
+            case R.id.btn_navmap:
+                break;
+            case R.id.btn_navsearch:
+                break;
             default:
                 break;
         }
+
     }
 
     @Override
@@ -168,10 +189,10 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.show();
     }
 
-    /*public void dialogSetup(View v) {
+    public void dialogSetup(View v) {
         PopupMenu language = new PopupMenu(this, v);
 
-    }*/
+    }
 
     @SuppressLint("NonConstantResourceId")
     @Override
