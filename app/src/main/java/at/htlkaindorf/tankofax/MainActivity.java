@@ -7,13 +7,19 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
+import android.widget.SearchView;
+import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -39,24 +45,26 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private final Map_Access ma = new Map_Access();
     private final DetailAdapter da = new DetailAdapter();
     private final Button[] fuelButton = new Button[3];
-
     private GoogleMap map;
     private Marker marker;
     private double lat, lon;
     private SupportMapFragment mapFragment;
-
     private RecyclerView recyclerView;
-
     private boolean moveCamera = true;
+    private Toolbar toolbar;
+    private Menu menu;
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-
+        
+        toolbar = findViewById(R.id.myToolBar);
+        setSupportActionBar(toolbar);
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
 
@@ -71,6 +79,43 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         for (Button button : fuelButton) {
             button.setOnClickListener(this::onClickListener);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater =getMenuInflater();
+        inflater.inflate(R.menu.menu,menu);
+
+        MenuItem.OnActionExpandListener onActionExpandListener= new MenuItem.OnActionExpandListener() {
+            @Override
+            public boolean onMenuItemActionExpand(MenuItem item) {
+                Toast.makeText(MainActivity.this,"Search is Expanded",Toast.LENGTH_SHORT);
+                return true;
+            }
+            @Override
+            public boolean onMenuItemActionCollapse(MenuItem item) {
+                Toast.makeText(MainActivity.this,"Search is Collapsed",Toast.LENGTH_SHORT);
+                return true;
+            }
+        };
+        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setQueryHint("Search for Location...");
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch(item.getItemId()){
+            case R.id.search:
+                break;
+            case R.id.settings:
+                onSettings(findViewById(R.id.settings));
+                break;
+            case R.id.location:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -167,12 +212,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.inflate(R.menu.popup_settings);
         settings.show();
     }
-
-    /*public void dialogSetup(View v) {
-        PopupMenu language = new PopupMenu(this, v);
-
-    }*/
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
