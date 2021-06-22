@@ -62,6 +62,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private Toolbar toolbar;
     private Menu menu;
 
+    private LatLng inputLocation;
 
 
     @SuppressLint("MissingPermission")
