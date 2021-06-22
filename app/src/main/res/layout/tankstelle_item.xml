@@ -102,24 +102,24 @@
             android:text="670045" />
 
         <TextView
-            android:id="@+id/tv_opening_hour"
+            android:id="@+id/tv_coordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_distance"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Opening Hour:" />
+            android:text="Cooridnates:" />
 
         <TextView
-            android:id="@+id/tv_v_opening_hour"
+            android:id="@+id/tv_v_coordinates"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/tv_opening_hour"
+            android:layout_alignTop="@+id/tv_coordinates"
             android:layout_alignParentEnd="true"
             android:layout_marginStart="8dp"
             android:layout_marginTop="0dp"
             android:layout_marginEnd="8dp"
-            android:layout_toEndOf="@+id/tv_opening_hour"
+            android:layout_toEndOf="@+id/tv_coordinates"
             android:padding="6dp"
             android:text="Schreibwaslangesrein dann geht das doch" />
 
@@ -140,7 +140,7 @@
             android:id="@+id/tv_contact"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tv_opening_hour"
+            android:layout_below="@+id/tv_coordinates"
             android:layout_marginTop="8dp"
             android:padding="6dp"
             android:text="Contact:" />

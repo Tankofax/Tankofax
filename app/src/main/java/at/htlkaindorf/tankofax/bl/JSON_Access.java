@@ -27,13 +27,12 @@ public class JSON_Access extends AsyncTask<String, Void, List<Map_Search>> {
             URL url = new URL(urlString);
             ObjectMapper om = new ObjectMapper();
             JsonNode node = om.readTree(url.openConnection().getInputStream());
-            String status = node.get("status").asText();
             for (JsonNode jsonNode: node.get("results")) {
                 String formatted_address = jsonNode.get("formatted_address").asText();
                 for (JsonNode jsonNode1: jsonNode.get("geometry")) {
                     JsonNode lat = jsonNode1.get("lat");
                     JsonNode lng = jsonNode1.get("lng");
-                    if(lat != null && lng != null) {
+                    if (lat != null && lng != null) {
                         results.add(new Map_Search(formatted_address, lat.asDouble(), lng.asDouble()));
                     }
                 }

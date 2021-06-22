@@ -31,15 +31,15 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
 
         TextView tv_Distance = view.findViewById(R.id.tv_distance);
         TextView tv_v_Distance = view.findViewById(R.id.tv_v_distance);
-        TextView tv_Opening_Hour = view.findViewById(R.id.tv_opening_hour);
-        TextView tv_v_Opening_Hour = view.findViewById(R.id.tv_v_opening_hour);
+        TextView tv_coordinates = view.findViewById(R.id.tv_coordinates);
+        TextView tv_v_coordinates = view.findViewById(R.id.tv_v_coordinates);
         TextView tv_Contact = view.findViewById(R.id.tv_contact);
         TextView tv_v_Contact = view.findViewById(R.id.tv_v_contact);
 
         RelativeLayout exapandable = view.findViewById(R.id.expandable_layout);
         RelativeLayout unexpanded = view.findViewById(R.id.unexpanded_layout);
 
-        return new DetailHolder(view, tv_Adresse, tv_Name, tv_Price1, tv_Price2, tv_Distance, tv_v_Distance, tv_Opening_Hour, tv_v_Opening_Hour, tv_Contact, tv_v_Contact, exapandable, unexpanded, tankstellen, this);
+        return new DetailHolder(view, tv_Adresse, tv_Name, tv_Price1, tv_Price2, tv_Distance, tv_v_Distance, tv_coordinates, tv_v_coordinates, tv_Contact, tv_v_Contact, exapandable, unexpanded, tankstellen, this);
     }
 
     @SuppressLint("SetTextI18n")
@@ -50,7 +50,7 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         holder.getTv_Name().setText(tankstelle.getName());
         holder.getTv_Price2().setText(tankstelle.getPrices()[0].getAmount() + "");
         holder.getTv_v_distance().setText(tankstelle.getDistance() + "");
-        holder.getTv_v_opening_hour().setText(Arrays.toString(tankstelle.getOpeningHours()) + "");
+        holder.getTv_v_coordinates().setText(tankstelle.getLocation() + "");
         holder.getTv_v_contact().setText(tankstelle.getContact() + "");
         boolean isExpandable;
         try {

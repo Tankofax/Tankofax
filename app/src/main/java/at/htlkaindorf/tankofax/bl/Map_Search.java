@@ -1,6 +1,5 @@
 package at.htlkaindorf.tankofax.bl;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
@@ -15,4 +14,9 @@ public class Map_Search {
     private String formattedAddress;
     private double lat;
     private double lng;
+
+    @Override
+    public String toString() {
+        return String.format("%s: %lf;%lf", formattedAddress, lat, lng);
+    }
 }

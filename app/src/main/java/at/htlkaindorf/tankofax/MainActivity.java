@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private final Button[] fuelButton = new Button[3];
 
-    private final ImageButton[] locationButton = new ImageButton[2];
-
 
     private GoogleMap map;
     private Marker marker;
@@ -89,19 +87,14 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         fuelButton[1] = findViewById(R.id.btn_benzin);
         fuelButton[2] = findViewById(R.id.btn_gas);
 
-        locationButton[0] = findViewById(R.id.btn_navmap);
-        locationButton[0] = findViewById(R.id.btn_navsearch);
-
         for (Button button : fuelButton) {
             button.setOnClickListener(this::onClickListener);
-        }
-        for (ImageButton imageButton: locationButton) {
-            imageButton.setOnClickListener(this::onClickListener);
         }
 
         try {
             List<Map_Search> map_searches = new JSON_Access().execute("Grottenhofstraße 102").get();
-            map_searches.forEach(m1 -> System.out.println(m1.getFormattedAddress() + " : " + m1.getLat() + ";" + m1.getLng()));
+            map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
+            System.out.println(inputLocation);
         } catch (ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
@@ -147,6 +140,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @SuppressLint("NonConstantResourceId")
     public void onClickListener(View v) {
         map.clear();
+        Thread thread = null;
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
@@ -154,9 +148,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     da.setFuel(dieList);
                     recyclerView.setAdapter(da);
                     ma.setVariables(this, dieList, map);
-                    Thread thread = new Thread(ma, "diesel");
-                    thread.start();
-                    moveCamera = !moveCamera;
+                    thread = new Thread(ma, "diesel");
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -167,9 +159,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     da.setFuel(supList);
                     recyclerView.setAdapter(da);
                     ma.setVariables(this, supList, map);
-                    Thread thread = new Thread(ma, "super");
-                    thread.start();
-                    moveCamera = !moveCamera;
+                    thread = new Thread(ma, "super");
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -181,21 +171,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     da.setFuel(gasList);
                     recyclerView.setAdapter(da);
                     ma.setVariables(this, gasList, map);
-                    Thread thread = new Thread(ma, "gas");
-                    thread.start();
-                    moveCamera = !moveCamera;
+                    thread = new Thread(ma, "gas");
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
                 break;
-            case R.id.btn_navmap:
-                break;
-            case R.id.btn_navsearch:
-                break;
+            //case R.id.btn_stateSourceChanger:
+            //    break;
             default:
                 break;
         }
-
+        moveCamera = false;
+        thread.start();
     }
 
     @Override

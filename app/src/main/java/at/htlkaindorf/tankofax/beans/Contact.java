@@ -15,6 +15,11 @@ public class Contact {
     private String fax;
     private String mail;
     private String website;
+
+    @Override
+    public String toString() {
+        return String.format("Tel:+%s\nFax:%s\nMail:%s\nWebsite:%s", telephone, fax, mail, website).replaceAll("null", "nicht Angegeben");
+    }
 }
 
 /*

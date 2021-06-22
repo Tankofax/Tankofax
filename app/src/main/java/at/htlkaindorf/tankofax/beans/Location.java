@@ -16,6 +16,11 @@ public class Location {
     private String city;
     private double latitude;
     private double longitude;
+
+    @Override
+    public String toString() {
+        return String.format("%s\n%d, %s\nGPS: %f, %f", address, postalCode, city, latitude, longitude);
+    }
 }
 
 /*

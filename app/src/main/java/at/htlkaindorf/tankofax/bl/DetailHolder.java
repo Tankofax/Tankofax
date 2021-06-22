@@ -19,8 +19,8 @@ public class DetailHolder extends RecyclerView.ViewHolder {
     private final TextView tv_Price2;
     private final TextView tv_contact;
     private final TextView tv_v_contact;
-    private final TextView tv_opening_hour;
-    private final TextView tv_v_opening_hour;
+    private final TextView tv_coordinates;
+    private final TextView tv_v_coodinates;
     private final TextView tv_distance;
     private final TextView tv_v_distance;
 
@@ -28,7 +28,7 @@ public class DetailHolder extends RecyclerView.ViewHolder {
     private RelativeLayout unexpanded_layout;
 
     public DetailHolder(@NonNull View itemView, TextView tv_Address, TextView tv_Name, TextView tv_Price1, TextView tv_Price2
-                        , TextView tv_contact, TextView tv_v_contact, TextView tv_opening_hour, TextView tv_v_opening_hour,
+                        , TextView tv_contact, TextView tv_v_contact, TextView tv_coordinates, TextView tv_v_coodinates,
                         TextView tv_distance, TextView tv_v_distance, RelativeLayout expandable_layout, RelativeLayout unexpanded_layout, List<Tankstelle> tankstellen, DetailAdapter adapter) {
         super(itemView);
         this.tv_Address = tv_Address;
@@ -37,8 +37,8 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         this.tv_Price2 = tv_Price2;
         this.tv_contact = tv_contact;
         this.tv_v_contact = tv_v_contact;
-        this.tv_opening_hour = tv_opening_hour;
-        this.tv_v_opening_hour = tv_v_opening_hour;
+        this.tv_coordinates = tv_coordinates;
+        this.tv_v_coodinates = tv_v_coodinates;
         this.tv_distance = tv_distance;
         this.tv_v_distance = tv_v_distance;
 
@@ -56,8 +56,8 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         return tv_v_contact;
     }
 
-    public TextView getTv_v_opening_hour() {
-        return tv_v_opening_hour;
+    public TextView getTv_v_coordinates() {
+        return tv_v_coodinates;
     }
 
     public TextView getTv_v_distance() {
@@ -96,8 +96,8 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         return tv_contact;
     }
 
-    public TextView getTv_opening_hour() {
-        return tv_opening_hour;
+    public TextView getTv_coordinates() {
+        return tv_coordinates;
     }
 
     public TextView getTv_distance() {
