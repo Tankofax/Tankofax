@@ -118,9 +118,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 return true;
             }
         };
-        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
-        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
-        searchView.setQueryHint("Search for Location...");
+            menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
+        //SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        //searchView.setQueryHint("Search for Location...");
         return true;
     }
 
@@ -227,11 +227,18 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.inflate(R.menu.popup_settings);
         settings.show();
     }
+
+    public void onLanguageSettings(View v){
+        PopupMenu settings = new PopupMenu(this, v);
+        settings.setOnMenuItemClickListener(this);
+        settings.inflate(R.menu.popup_languages);
+        settings.show();
+    }
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.set1:
+            case R.id.set1: onLanguageSettings();
 
                 break;
             case R.id.set2:

@@ -13,32 +13,25 @@ import at.htlkaindorf.tankofax.beans.Tankstelle;
 
 public class DetailHolder extends RecyclerView.ViewHolder {
 
-    private final TextView tv_Address;
-    private final TextView tv_Name;
-    private final TextView tv_Price1;
-    private final TextView tv_Price2;
+    private final TextView tv_v_Address;
+    private final TextView tv_v_Name;
+    private final TextView tv_v_price;
     private final TextView tv_contact;
     private final TextView tv_v_contact;
-    private final TextView tv_coordinates;
-    private final TextView tv_v_coodinates;
     private final TextView tv_distance;
     private final TextView tv_v_distance;
 
     private RelativeLayout expandable_layout;
     private RelativeLayout unexpanded_layout;
 
-    public DetailHolder(@NonNull View itemView, TextView tv_Address, TextView tv_Name, TextView tv_Price1, TextView tv_Price2
-                        , TextView tv_contact, TextView tv_v_contact, TextView tv_coordinates, TextView tv_v_coodinates,
-                        TextView tv_distance, TextView tv_v_distance, RelativeLayout expandable_layout, RelativeLayout unexpanded_layout, List<Tankstelle> tankstellen, DetailAdapter adapter) {
+    public DetailHolder(@NonNull View itemView, TextView tv_v_Address, TextView tv_v_Name, TextView tv_v_price, TextView tv_contact, TextView tv_v_contact,TextView tv_distance, TextView tv_v_distance,
+                            RelativeLayout expandable_layout, RelativeLayout unexpanded_layout, List<Tankstelle> tankstellen, DetailAdapter adapter) {
         super(itemView);
-        this.tv_Address = tv_Address;
-        this.tv_Name = tv_Name;
-        this.tv_Price1 = tv_Price1;
-        this.tv_Price2 = tv_Price2;
+        this.tv_v_Address = tv_v_Address;
+        this.tv_v_Name = tv_v_Name;
+        this.tv_v_price = tv_v_price;
         this.tv_contact = tv_contact;
         this.tv_v_contact = tv_v_contact;
-        this.tv_coordinates = tv_coordinates;
-        this.tv_v_coodinates = tv_v_coodinates;
         this.tv_distance = tv_distance;
         this.tv_v_distance = tv_v_distance;
 
@@ -56,9 +49,7 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         return tv_v_contact;
     }
 
-    public TextView getTv_v_coordinates() {
-        return tv_v_coodinates;
-    }
+
 
     public TextView getTv_v_distance() {
         return tv_v_distance;
@@ -76,30 +67,18 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         this.unexpanded_layout = unexpanded_layout;
     }
 
-    public TextView getTv_Address() {
-        return tv_Address;
+    public TextView getTv_v_Address() {
+        return tv_v_Address;
     }
-
-    public TextView getTv_Name() {
-        return tv_Name;
+    public TextView getTv_v_Name() {
+        return tv_v_Name;
     }
-
-    public TextView getTv_Price2() {
-        return tv_Price2;
+    public TextView getTv_v_price() {
+        return tv_v_price;
     }
-
-    public TextView getTv_Price1() {
-        return tv_Price1;
-    }
-
     public TextView getTv_contact() {
         return tv_contact;
     }
-
-    public TextView getTv_coordinates() {
-        return tv_coordinates;
-    }
-
     public TextView getTv_distance() {
         return tv_distance;
     }
