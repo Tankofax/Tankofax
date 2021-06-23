@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.app.ActivityCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +33,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
     private final Button[] fuelButton = new Button[3];
 
+    private View settingsView;
+    private int settingsGravity;
 
     private GoogleMap map;
     private Marker marker;
@@ -56,8 +60,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private SupportMapFragment mapFragment;
     private RecyclerView recyclerView;
     private boolean moveCamera = true;
-
-    private Toolbar toolbar;
 
     private LatLng inputLocation;
     private boolean gpsLocation = true;
@@ -71,8 +73,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         ActivityCompat.requestPermissions(this,
                 new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
         mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        
-        toolbar = findViewById(R.id.myToolBar);
+
+        Toolbar toolbar = findViewById(R.id.myToolBar);
         setSupportActionBar(toolbar);
         LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
@@ -118,11 +120,27 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
             }
         };
             menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
-        //SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+
+        SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                System.out.println(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
         //searchView.setQueryHint("Search for Location...");
         return true;
     }
 
+
+
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
@@ -228,27 +246,38 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     public void onSettings(View v) {
+
         PopupMenu settings = new PopupMenu(this, v);
+
         settings.setOnMenuItemClickListener(this);
         settings.inflate(R.menu.popup_settings);
+        settingsView = v;
+        settingsGravity = settings.getGravity();
         settings.show();
     }
 
-    public void onLanguageSettings(View v){
-        PopupMenu settings = new PopupMenu(this, v);
-        settings.setOnMenuItemClickListener(this);
-        settings.inflate(R.menu.popup_languages);
-        settings.show();
+    public void onThemeSettings(View settingsView, int settingsGravity){
+        PopupMenu themes = new PopupMenu(this,settingsView,settingsGravity);
+        themes.setOnMenuItemClickListener(this);
+        themes.inflate(R.menu.popup_themes);
+        themes.show();
+    }
+
+    public void onLanguageSettings(View settingsView,int gravity){
+        PopupMenu languages = new PopupMenu(this,settingsView,gravity );
+        languages.setOnMenuItemClickListener(this);
+        languages.inflate(R.menu.popup_languages);
+        languages.show();
     }
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.set1: onLanguageSettings(item.getActionView());
-
+            case R.id.set1:
+                onThemeSettings(settingsView,settingsGravity);
                 break;
             case R.id.set2:
-
+                onLanguageSettings(settingsView,settingsGravity);
                 break;
             default:
                 break;
