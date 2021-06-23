@@ -3,7 +3,8 @@ package at.htlkaindorf.tankofax;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -13,11 +14,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
-import android.widget.SearchView;
 import android.widget.Toast;
-
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,7 +46,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private static final int REQUEST_LOCATION = 1;
     private final Map_Access ma = new Map_Access();
     private final DetailAdapter da = new DetailAdapter();
-    private final JSON_Access json = new JSON_Access();
 
     private final Button[] fuelButton = new Button[3];
 
@@ -93,10 +90,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         }
 
         try {
-            List<Map_Search> map_searches = new JSON_Access().execute("Grottenhofstraße 102").get();
+            ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            String apikey = applicationInfo.metaData.getString("com.google.android.geo.API_KEY");
+            List<Map_Search> map_searches = new JSON_Access().execute("Grottenhofstraße 102", apikey).get();
             map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
             System.out.println(inputLocation);
-        } catch (ExecutionException | InterruptedException e) {
+        } catch (NullPointerException | PackageManager.NameNotFoundException | ExecutionException | InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -109,12 +108,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         MenuItem.OnActionExpandListener onActionExpandListener= new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Toast.makeText(MainActivity.this,"Search is Expanded",Toast.LENGTH_SHORT);
+                Toast.makeText(MainActivity.this,"Search is Expanded",Toast.LENGTH_SHORT).show();
                 return true;
             }
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Toast.makeText(MainActivity.this,"Search is Collapsed",Toast.LENGTH_SHORT);
+                Toast.makeText(MainActivity.this,"Search is Collapsed",Toast.LENGTH_SHORT).show();
                 return true;
             }
         };
@@ -147,19 +146,16 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
+                    List<Tankstelle> dieList;
                     if (gpsLocation) {
-                        List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
-                        da.setFuel(dieList);
-                        recyclerView.setAdapter(da);
-                        ma.setVariables(this, dieList, map);
-                        thread = new Thread(ma, "diesel");
+                        dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
                     } else {
-                        List<Tankstelle> dieList = new API_Access().execute("DIE", inputLocation.latitude + "", inputLocation.longitude + "").get();
-                        da.setFuel(dieList);
-                        recyclerView.setAdapter(da);
-                        ma.setVariables(this, dieList, map);
-                        thread = new Thread(ma, "diesel");
+                        dieList = new API_Access().execute("DIE", inputLocation.latitude + "", inputLocation.longitude + "").get();
                     }
+                    da.setFuel(dieList);
+                    recyclerView.setAdapter(da);
+                    ma.setVariables(this, dieList, map);
+                    thread = new Thread(ma, "diesel");
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -248,7 +244,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.set1: onLanguageSettings();
+            case R.id.set1: onLanguageSettings(item.getActionView());
 
                 break;
             case R.id.set2:

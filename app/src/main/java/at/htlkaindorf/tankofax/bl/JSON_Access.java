@@ -1,29 +1,29 @@
 package at.htlkaindorf.tankofax.bl;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.htlkaindorf.tankofax.beans.Tankstelle;
+import at.htlkaindorf.tankofax.MainActivity;
 
 public class JSON_Access extends AsyncTask<String, Void, List<Map_Search>> {
     private final List<Map_Search> results = new ArrayList<>();
-
+    private MainActivity main;
     @Override
     protected List<Map_Search> doInBackground(String... strings) {
         List<Map_Search> results = new ArrayList<>();
         try {
             //https://maps.googleapis.com/maps/api/geocode/json?address=1600+Amphitheatre+Parkway,+Mountain+View,+CA&key=YOUR_API_KEY
-            String baseURL = "https://maps.googleapis.com/maps/api/geocode/json?key=AIzaSyCcxOca6OU8CVZRR7q-RsUC0DAQyYaMA2E&address=";
-            String urlString = baseURL + strings[0].replaceAll(" ", "+");
+            String baseURL = "https://maps.googleapis.com/maps/api/geocode/json?address=";
+            String urlString = baseURL + strings[0].replaceAll(" ", "+") + "&key=" + strings[1];
             URL url = new URL(urlString);
             ObjectMapper om = new ObjectMapper();
             JsonNode node = om.readTree(url.openConnection().getInputStream());
