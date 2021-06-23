@@ -1,7 +1,5 @@
 package at.htlkaindorf.tankofax.bl;
 
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -12,11 +10,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import at.htlkaindorf.tankofax.MainActivity;
-
 public class JSON_Access extends AsyncTask<String, Void, List<Map_Search>> {
     private final List<Map_Search> results = new ArrayList<>();
-    private MainActivity main;
+
     @Override
     protected List<Map_Search> doInBackground(String... strings) {
         List<Map_Search> results = new ArrayList<>();

@@ -64,6 +64,8 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private LatLng inputLocation;
     private boolean gpsLocation = true;
 
+    private String API_KEY;
+
     @SuppressLint("MissingPermission")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,65 +95,68 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
 
         try {
             ApplicationInfo applicationInfo = this.getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
-            String apikey = applicationInfo.metaData.getString("com.google.android.geo.API_KEY");
-            List<Map_Search> map_searches = new JSON_Access().execute("Grottenhofstraße 102", apikey).get();
-            map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
-            System.out.println(inputLocation);
-        } catch (NullPointerException | PackageManager.NameNotFoundException | ExecutionException | InterruptedException e) {
+            API_KEY = applicationInfo.metaData.getString("com.google.android.geo.API_KEY");
+        } catch (NullPointerException | PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater =getMenuInflater();
-        inflater.inflate(R.menu.menu,menu);
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
 
-        MenuItem.OnActionExpandListener onActionExpandListener= new MenuItem.OnActionExpandListener() {
+        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
             @Override
             public boolean onMenuItemActionExpand(MenuItem item) {
-                Toast.makeText(MainActivity.this,"Search is Expanded",Toast.LENGTH_SHORT).show();
                 return true;
             }
+
             @Override
             public boolean onMenuItemActionCollapse(MenuItem item) {
-                Toast.makeText(MainActivity.this,"Search is Collapsed",Toast.LENGTH_SHORT).show();
                 return true;
             }
         };
-            menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
+        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
 
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
-                System.out.println(query);
-                return false;
+                List<Map_Search> map_searches = null;
+                try {
+                    map_searches = new JSON_Access().execute(query, API_KEY).get();
+                } catch (ExecutionException | InterruptedException e) {
+                    e.printStackTrace();
+                }
+                if (map_searches != null) {
+                    map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
+                }
+                System.out.println(inputLocation);
+                gpsLocation = false;
+                return true;
             }
-
             @Override
             public boolean onQueryTextChange(String newText) {
                 return false;
             }
         });
-        //searchView.setQueryHint("Search for Location...");
         return true;
     }
-
 
 
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch(item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.search:
-                gpsLocation = false;
                 break;
             case R.id.settings:
                 onSettings(findViewById(R.id.settings));
                 break;
             case R.id.location:
                 gpsLocation = true;
+                moveCamera = true;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -180,7 +185,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 break;
             case R.id.btn_benzin:
                 try {
-                    List<Tankstelle> supList = new API_Access().execute("SUP", lat + "", lon + "").get();
+                    List<Tankstelle> supList;
+                    if (gpsLocation) {
+                        supList = new API_Access().execute("SUP", lat + "", lon + "").get();
+                    } else {
+                        supList = new API_Access().execute("SUP", inputLocation.latitude + "", inputLocation.longitude + "").get();
+                    }
                     da.setFuel(supList);
                     recyclerView.setAdapter(da);
                     ma.setVariables(this, supList, map);
@@ -191,7 +201,12 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 break;
             case R.id.btn_gas:
                 try {
-                    List<Tankstelle> gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
+                    List<Tankstelle> gasList;
+                    if (gpsLocation) {
+                        gasList = new API_Access().execute("GAS", lat + "", lon + "").get();
+                    } else {
+                        gasList = new API_Access().execute("GAS", inputLocation.latitude + "", inputLocation.longitude + "").get();
+                    }
                     DetailAdapter da = new DetailAdapter();
                     da.setFuel(gasList);
                     recyclerView.setAdapter(da);
@@ -200,10 +215,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
-                break;
-            //case R.id.btn_stateSourceChanger:
-            //    break;
-            default:
                 break;
         }
         moveCamera = false;
@@ -237,18 +248,23 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
-        LatLng currentPosition = new LatLng(lat, lon);
-        marker = map.addMarker(new MarkerOptions().position(currentPosition));
-        if (moveCamera) {
-            map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
+        if (gpsLocation) {
+            LatLng currentPosition = new LatLng(lat, lon);
+            marker = map.addMarker(new MarkerOptions().position(currentPosition));
+            if (moveCamera) {
+                map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
+            }
+        } else {
+            marker = map.addMarker(new MarkerOptions().position(inputLocation));
+            if (moveCamera) {
+                map.moveCamera(CameraUpdateFactory.newLatLng(inputLocation));
+            }
         }
         map.setMinZoomPreference(10);
     }
 
     public void onSettings(View v) {
-
         PopupMenu settings = new PopupMenu(this, v);
-
         settings.setOnMenuItemClickListener(this);
         settings.inflate(R.menu.popup_settings);
         settingsView = v;
@@ -256,28 +272,29 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         settings.show();
     }
 
-    public void onThemeSettings(View settingsView, int settingsGravity){
-        PopupMenu themes = new PopupMenu(this,settingsView,settingsGravity);
+    public void onThemeSettings(View settingsView, int settingsGravity) {
+        PopupMenu themes = new PopupMenu(this, settingsView, settingsGravity);
         themes.setOnMenuItemClickListener(this);
         themes.inflate(R.menu.popup_themes);
         themes.show();
     }
 
-    public void onLanguageSettings(View settingsView,int gravity){
-        PopupMenu languages = new PopupMenu(this,settingsView,gravity );
+    public void onLanguageSettings(View settingsView, int gravity) {
+        PopupMenu languages = new PopupMenu(this, settingsView, gravity);
         languages.setOnMenuItemClickListener(this);
         languages.inflate(R.menu.popup_languages);
         languages.show();
     }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.set1:
-                onThemeSettings(settingsView,settingsGravity);
+                onThemeSettings(settingsView, settingsGravity);
                 break;
             case R.id.set2:
-                onLanguageSettings(settingsView,settingsGravity);
+                onLanguageSettings(settingsView, settingsGravity);
                 break;
             default:
                 break;

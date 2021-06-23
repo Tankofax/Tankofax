@@ -26,11 +26,8 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         TextView tv_v_Adresse = view.findViewById(R.id.tv_v_Adresse);
         TextView tv_v_Name = view.findViewById(R.id.tv_v_Name);
         TextView tv_v_price = view.findViewById(R.id.tv_v_price);
-        TextView tv_Distance = view.findViewById(R.id.tv_distance);
-        TextView tv_Contact = view.findViewById(R.id.tv_contact);
 
         TextView tv_v_Distance = view.findViewById(R.id.tv_v_distance);
-        TextView tv_v_Contact = view.findViewById(R.id.tv_v_contact1);
 
         TextView tv_v_contact1 = view.findViewById(R.id.tv_v_contact1);
         TextView tv_v_contact2 = view.findViewById(R.id.tv_v_contact2);
@@ -45,10 +42,10 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         RelativeLayout exapandable = view.findViewById(R.id.expandable_layout);
         RelativeLayout unexpanded = view.findViewById(R.id.unexpanded_layout);
 
-        return new DetailHolder(view, tv_v_Adresse, tv_v_Name, tv_v_price,tv_Distance, tv_v_Distance, tv_Contact, tv_v_Contact, exapandable, unexpanded, tankstellen, this);
+        return new DetailHolder(view, tv_v_Adresse, tv_v_Name, tv_v_price, tv_v_contact1, tv_v_Distance, exapandable, unexpanded, tankstellen, this, tv_v_contact2, tv_v_contact3, tv_v_contact4, tv_v_oh1, tv_v_oh2, tv_v_oh3, tv_v_oh4);
     }
 
-    @SuppressLint("SetTextI18n")
+    @SuppressLint({"SetTextI18n", "DefaultLocale"})
     @Override
     public void onBindViewHolder(@NonNull DetailHolder holder, int position) {
         Tankstelle tankstelle = tankstellen.get(position);
@@ -57,9 +54,18 @@ public class DetailAdapter extends RecyclerView.Adapter<DetailHolder> {
         holder.getTv_v_price().setText(tankstelle.getPrices()[0].getAmount() + "");
         holder.getTv_v_Address().setText(tankstelle.getLocation().getAddress());
 
+        holder.getTv_v_distance().setText(String.format("%.2f km", tankstelle.getDistance()));
 
-        holder.getTv_v_distance().setText(tankstelle.getDistance() + "");
-        holder.getTv_v_contact().setText(tankstelle.getContact() + "");
+        holder.getTv_v_contact1().setText(tankstelle.getContact().getTelephone());
+        holder.getTv_v_contact2().setText(tankstelle.getContact().getFax());
+        holder.getTv_v_contact3().setText(tankstelle.getContact().getWebsite());
+        holder.getTv_v_contact4().setText(tankstelle.getContact().getMail());
+
+        holder.getTv_v_openingHours1().setText(tankstelle.getOpeningHours()[0].getFrom() + " - " + tankstelle.getOpeningHours()[0].getTo());
+        holder.getTv_v_openingHours2().setText(tankstelle.getOpeningHours()[4].getFrom() + " - " + tankstelle.getOpeningHours()[4].getTo());
+        holder.getTv_v_openingHours3().setText(tankstelle.getOpeningHours()[5].getFrom() + " - " + tankstelle.getOpeningHours()[5].getTo());
+        holder.getTv_v_openingHours4().setText(tankstelle.getOpeningHours()[6].getFrom() + " - " + tankstelle.getOpeningHours()[6].getTo());
+
         boolean isExpandable;
         try {
             isExpandable = tankstellen.get(position).isExpandable();
