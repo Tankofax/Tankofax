@@ -3,6 +3,7 @@ package at.htlkaindorf.tankofax;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -60,10 +61,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     private boolean moveCamera = true;
 
     private Toolbar toolbar;
-    private Menu menu;
 
     private LatLng inputLocation;
-
+    private boolean gpsLocation = true;
 
     @SuppressLint("MissingPermission")
     @Override
@@ -128,11 +128,13 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch(item.getItemId()){
             case R.id.search:
+                gpsLocation = false;
                 break;
             case R.id.settings:
                 onSettings(findViewById(R.id.settings));
                 break;
             case R.id.location:
+                gpsLocation = true;
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -145,11 +147,19 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         switch (v.getId()) {
             case R.id.btn_diesel:
                 try {
-                    List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
-                    da.setFuel(dieList);
-                    recyclerView.setAdapter(da);
-                    ma.setVariables(this, dieList, map);
-                    thread = new Thread(ma, "diesel");
+                    if (gpsLocation) {
+                        List<Tankstelle> dieList = new API_Access().execute("DIE", lat + "", lon + "").get();
+                        da.setFuel(dieList);
+                        recyclerView.setAdapter(da);
+                        ma.setVariables(this, dieList, map);
+                        thread = new Thread(ma, "diesel");
+                    } else {
+                        List<Tankstelle> dieList = new API_Access().execute("DIE", inputLocation.latitude + "", inputLocation.longitude + "").get();
+                        da.setFuel(dieList);
+                        recyclerView.setAdapter(da);
+                        ma.setVariables(this, dieList, map);
+                        thread = new Thread(ma, "diesel");
+                    }
                 } catch (ExecutionException | InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -183,7 +193,9 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 break;
         }
         moveCamera = false;
-        thread.start();
+        if (thread != null) {
+            thread.start();
+        }
     }
 
     @Override
@@ -212,8 +224,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
         LatLng currentPosition = new LatLng(lat, lon);
-        map.addMarker(new MarkerOptions()
-                .position(currentPosition));
         marker = map.addMarker(new MarkerOptions().position(currentPosition));
         if (moveCamera) {
             map.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
