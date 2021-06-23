@@ -45,22 +45,19 @@ import at.htlkaindorf.tankofax.bl.Map_Access;
 import at.htlkaindorf.tankofax.bl.Map_Search;
 
 public class MainActivity extends AppCompatActivity implements LocationListener, OnMapReadyCallback, PopupMenu.OnMenuItemClickListener {
+
     private static final int REQUEST_LOCATION = 1;
     private final Map_Access ma = new Map_Access();
     private final DetailAdapter da = new DetailAdapter();
-
     private final Button[] fuelButton = new Button[3];
-
     private View settingsView;
     private int settingsGravity;
-
     private GoogleMap map;
     private Marker marker;
     private double lat, lon;
     private SupportMapFragment mapFragment;
     private RecyclerView recyclerView;
     private boolean moveCamera = true;
-
     private LatLng inputLocation;
     private boolean gpsLocation = true;
 
@@ -143,7 +140,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
         });
         return true;
     }
-
 
     @SuppressLint("NonConstantResourceId")
     @Override
@@ -295,6 +291,15 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 break;
             case R.id.set2:
                 onLanguageSettings(settingsView, settingsGravity);
+                break;
+            case R.id.lan_1:
+                
+                break;
+            case R.id.lan_2:
+                break;
+            case R.id.theme1:
+                break;
+            case R.id.theme2:
                 break;
             default:
                 break;

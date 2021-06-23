@@ -1,36 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">Tankofax</string>
-
     <string name="price">Preis in €</string>
-
-    <string name="distance">Distanz:</string>
-
+    <string name="distance">Entfernung:</string>
     <string name="contact">Kontakt:</string>
-
     <string name="oh">Öffnungszeiten:</string>
-
-
     <string name="oh_1">Montag-Donnerstag:</string>
     <string name="oh_2">Freitag:</string>
     <string name="oh_3">Samstag:</string>
     <string name="oh_4">Sonn- und Feiertag:</string>
-
-    <string name="tel" translatable="false">Tel:</string>
-    <string name="fax" translatable="false">Fax:</string>
-    <string name="website" translatable="false">Website:</string>
-    <string name="email" translatable="false">E-Mail:</string>
-
     <string name="gas_1">Diesel</string>
     <string name="gas_2">Super</string>
     <string name="gas_3">Erdgas</string>
-
-    <string name="set_1">Theme</string>
-    <string name="set_2">Language</string>
-
-    <string name="theme_1">Light Theme</string>
-    <string name="theme_2">Dark Theme</string>
-
-    <string name="lan_1">English</string>
+    <string name="set_1">Design</string>
+    <string name="set_2">Sprache</string>
+    <string name="theme_1">Helles Design</string>
+    <string name="theme_2">Dunkles Design</string>
+    <string name="lan_1">Englisch</string>
     <string name="lan_2">Deutsch</string>
 </resources>

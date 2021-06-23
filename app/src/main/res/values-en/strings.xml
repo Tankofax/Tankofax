@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tankofax</string>
+    <string name="price">Price in €</string>
+    <string name="distance">Distance:</string>
+    <string name="contact">Contact:</string>
+    <string name="oh">Opening-Hours:</string>
+    <string name="oh_1">Monday-Thursday:</string>
+    <string name="oh_2">Friday:</string>
+    <string name="oh_3">Saturday:</string>
+    <string name="oh_4">Sunday and Holiday:</string>
+    <string name="gas_1">Diesel</string>
+    <string name="gas_2">Super</string>
+    <string name="gas_3">Gas</string>
+    <string name="set_1">Theme</string>
+    <string name="set_2">Language</string>
+    <string name="theme_1">Light Theme</string>
+    <string name="theme_2">Dark Theme</string>
+    <string name="lan_1">English</string>
+    <string name="lan_2">German</string>
+</resources>

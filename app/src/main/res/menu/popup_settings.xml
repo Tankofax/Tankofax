@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/set1"
-        android:title="@string/en_set_1"/>
+        android:title="@string/set_1"/>
     <item android:id="@+id/set2"
-        android:title="@string/en_set_2"/>
+        android:title="@string/set_2"/>
 </menu>

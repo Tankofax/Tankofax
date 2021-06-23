@@ -46,7 +46,7 @@
         android:layout_toEndOf="@+id/tv_v_Name"
         android:gravity="center"
         android:padding="4dp"
-        android:text="Price in €"
+        android:text="@string/price"
         android:textAlignment="center"
         android:textStyle="bold" />
 
@@ -88,7 +88,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="6dp"
-            android:text="Distance:"
+            android:text="@string/distance"
             android:textStyle="bold" />
 
         <TextView
@@ -213,7 +213,7 @@
             android:layout_below="@+id/tv_v_distance"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Contact:"
+            android:text="@string/contact"
             android:textStyle="bold" />
 
         <TextView
@@ -225,7 +225,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/tv_contact"
             android:padding="6dp"
-            android:text="Tel:" />
+            android:text="@string/tel" />
 
         <TextView
             android:id="@+id/tv_modo"
@@ -236,7 +236,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/tv_contact"
             android:padding="6dp"
-            android:text="Montag-Donnerstag:" />
+            android:text="@string/oh_1" />
 
         <TextView
             android:id="@+id/tv_fr"
@@ -247,7 +247,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/tv_contact"
             android:padding="6dp"
-            android:text="Freitag:" />
+            android:text="@string/oh_2" />
 
         <TextView
             android:id="@+id/tv_sa"
@@ -258,7 +258,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/tv_contact"
             android:padding="6dp"
-            android:text="Samstag:" />
+            android:text="@string/oh_3" />
 
         <TextView
             android:id="@+id/tv_sofr"
@@ -269,7 +269,7 @@
             android:layout_marginTop="8dp"
             android:layout_toEndOf="@+id/tv_contact"
             android:padding="6dp"
-            android:text="Sonn und Feiertag:" />
+            android:text="@string/oh_4" />
 
         <TextView
             android:id="@+id/tv_email"
@@ -280,7 +280,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Email:" />
+            android:text="@string/email" />
 
         <TextView
             android:id="@+id/tv_website"
@@ -291,7 +291,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Website:" />
+            android:text="@string/website" />
 
         <TextView
             android:id="@+id/tv_fax"
@@ -302,7 +302,7 @@
             android:layout_marginStart="0dp"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Fax:" />
+            android:text="@string/fax" />
 
         <TextView
             android:id="@+id/tv_oh"
@@ -311,7 +311,7 @@
             android:layout_below="@+id/tv_email"
             android:layout_marginTop="8dp"
             android:padding="6dp"
-            android:text="Opening Hours:"
+            android:text="@string/oh"
             android:textStyle="bold" />
 
     </RelativeLayout>
