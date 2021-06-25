@@ -102,20 +102,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
-
-        MenuItem.OnActionExpandListener onActionExpandListener = new MenuItem.OnActionExpandListener() {
-            @Override
-            public boolean onMenuItemActionExpand(MenuItem item) {
-                return true;
-            }
-
-            @Override
-            public boolean onMenuItemActionCollapse(MenuItem item) {
-                return true;
-            }
-        };
-        menu.findItem(R.id.search).setOnActionExpandListener(onActionExpandListener);
-
         SearchView searchView = (SearchView) menu.findItem(R.id.search).getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -129,7 +115,6 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                 if (map_searches != null) {
                     map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
                 }
-                System.out.println(inputLocation);
                 gpsLocation = false;
                 return true;
             }
@@ -230,16 +215,11 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
-    }
-
+    public void onStatusChanged(String provider, int status, Bundle extras) {}
     @Override
-    public void onProviderEnabled(String provider) {
-    }
-
+    public void onProviderEnabled(String provider) {}
     @Override
-    public void onProviderDisabled(String provider) {
-    }
+    public void onProviderDisabled(String provider) {}
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

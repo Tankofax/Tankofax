@@ -57,21 +57,17 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         });
     }
 
-    public TextView getTv_v_contact() {
-        return tv_v_contact;
-    }
-    public TextView getTv_v_distance() {
-        return tv_v_distance;
-    }
     public RelativeLayout getExpandable_layout() {
         return expandable_layout;
     }
+
     public void setExpandable_layout(RelativeLayout expandable_layout) {
         this.expandable_layout = expandable_layout;
     }
     public void setUnexpanded_layout(RelativeLayout unexpanded_layout) {
         this.unexpanded_layout = unexpanded_layout;
     }
+
     public TextView getTv_v_Address() {
         return tv_v_Address;
     }
@@ -100,10 +96,6 @@ public class DetailHolder extends RecyclerView.ViewHolder {
         return tv_v_contact4;
     }
 
-    public TextView getTv_v_distance() {
-        return tv_v_distance;
-    }
-
     public TextView getTv_v_openingHours1() {
         return tv_v_openingHours1;
     }
@@ -118,6 +110,10 @@ public class DetailHolder extends RecyclerView.ViewHolder {
 
     public TextView getTv_v_openingHours4() {
         return tv_v_openingHours4;
+    }
+
+    public TextView getTv_v_distance() {
+        return tv_v_distance;
     }
 
     public RelativeLayout getUnexpanded_layout() {
