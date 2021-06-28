@@ -120,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
                     map_searches.forEach(m1 -> inputLocation = new LatLng(m1.getLat(), m1.getLng()));
                 }
                 gpsLocation = false;
+                moveCamera = true;
                 return true;
             }
             @Override
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.search:
+                moveCamera = true;
                 break;
             case R.id.settings:
                 onSettings(findViewById(R.id.settings));
