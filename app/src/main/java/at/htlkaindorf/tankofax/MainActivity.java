@@ -5,6 +5,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -35,12 +37,14 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.sql.SQLOutput;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 
 import at.htlkaindorf.tankofax.beans.Tankstelle;
 import at.htlkaindorf.tankofax.bl.API_Access;
 import at.htlkaindorf.tankofax.bl.DetailAdapter;
 import at.htlkaindorf.tankofax.bl.JSON_Access;
+import at.htlkaindorf.tankofax.bl.LocaleHelper;
 import at.htlkaindorf.tankofax.bl.Map_Access;
 import at.htlkaindorf.tankofax.bl.Map_Search;
 
@@ -267,15 +271,17 @@ public class MainActivity extends AppCompatActivity implements LocationListener,
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.set1:
+
                 onThemeSettings(settingsView, settingsGravity);
                 break;
             case R.id.set2:
                 onLanguageSettings(settingsView, settingsGravity);
                 break;
             case R.id.lan_1:
-                
+                //attachBaseContext(LocaleHelper.onAttach(this,"en"));
                 break;
             case R.id.lan_2:
+                //attachBaseContext(LocaleHelper.onAttach(this,"de"));
                 break;
             case R.id.theme1:
                 break;
