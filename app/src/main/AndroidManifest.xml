@@ -13,9 +13,9 @@
         android:maxSdkVersion="22" />
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/icon_tankofax"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/icon_tankofax"
         android:supportsRtl="true"
         android:theme="@style/Theme.Tankofax">
         <activity android:name=".MainActivity">
